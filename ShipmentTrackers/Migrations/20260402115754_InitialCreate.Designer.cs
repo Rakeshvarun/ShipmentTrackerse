@@ -9,11 +9,11 @@ using ShipmentTrackers.Data;
 
 #nullable disable
 
-namespace ShipmentTrackers.Migrations
+namespace ShipmentTrackerse.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260402050032_creatshipment")]
-    partial class creatshipment
+    [Migration("20260402115754_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
