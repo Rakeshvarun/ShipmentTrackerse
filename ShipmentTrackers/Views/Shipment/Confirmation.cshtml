@@ -1,0 +1,18 @@
+﻿<!-- FILE: Views/Shipment/Confirmation.cshtml -->
+@{
+    ViewData["Title"] = "Shipment Created";
+}
+
+<div class="text-center py-5">
+    <div style="font-size:4rem">✅</div>
+    <h2 class="mt-3">Shipment Created Successfully!</h2>
+    <p class="lead">Your Tracking ID is:</p>
+    <div class="alert alert-success d-inline-block px-5 py-3 fs-4 fw-bold">
+        @ViewBag.TrackingId
+    </div>
+    <p class="text-muted small mt-2">Save this ID to track your shipment.</p>
+    <div class="mt-4">
+        <a href="/Shipment/Track" class="btn btn-outline-primary me-2">Track Now</a>
+        <a href="/Shipment/Create" class="btn btn-secondary">Create Another</a>
+    </div>
+</div>

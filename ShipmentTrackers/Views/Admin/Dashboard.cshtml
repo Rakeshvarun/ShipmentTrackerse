@@ -1,0 +1,78 @@
+﻿<!-- FILE: Views/Admin/Dashboard.cshtml -->
+@model List<ShipmentTrackers.Models.Shipment>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2 class="mb-1">🛠️ Admin Dashboard</h2>
+<p class="text-muted mb-4">Manage all shipments and update their status.</p>
+
+<!-- Stats Row -->
+<div class="row g-3 mb-4">
+    @{
+        var total = Model.Count;
+        var pending = Model.Count(s => s.Status == "Pending");
+        var transit = Model.Count(s => s.Status == "In Transit");
+        var delivered = Model.Count(s => s.Status == "Delivered");
+    }
+    <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm bg-light">
+            <div class="card-body"><div class="fs-2 fw-bold">@total</div><div class="text-muted">Total</div></div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm" style="background:#fff3cd">
+            <div class="card-body"><div class="fs-2 fw-bold">@pending</div><div class="text-muted">Pending</div></div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm" style="background:#cfe2ff">
+            <div class="card-body"><div class="fs-2 fw-bold">@transit</div><div class="text-muted">In Transit</div></div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-center border-0 shadow-sm" style="background:#d1e7dd">
+            <div class="card-body"><div class="fs-2 fw-bold">@delivered</div><div class="text-muted">Delivered</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Shipments Table -->
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Tracking ID</th>
+                <th>Sender</th>
+                <th>Destination</th>
+                <th>Status</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                var bc = s.Status switch
+                {
+                    "In Transit" => "badge-transit",
+                    "Delivered" => "badge-delivered",
+                    "Returned" => "badge-returned",
+                    _ => "badge-pending"
+                };
+                <tr>
+                    <td><code class="small">@s.TrackingId</code></td>
+                    <td>@s.SenderName</td>
+                    <td>@s.Destination</td>
+                    <td><span class="badge @bc">@s.Status</span></td>
+                    <td class="small text-muted">@s.UpdatedAt.ToString("dd MMM, HH:mm")</td>
+                    <td>
+                        <a href="/Admin/UpdateStatus/@s.Id" class="btn btn-sm btn-outline-primary">Update</a>
+                        <a href="/Admin/Delete/@s.Id" class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('Delete this shipment?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

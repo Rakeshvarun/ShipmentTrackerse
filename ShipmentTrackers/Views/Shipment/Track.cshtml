@@ -1,0 +1,52 @@
+﻿<!-- FILE: Views/Shipment/Track.cshtml -->
+@model ShipmentTrackers.Models.Shipment
+@{
+    ViewData["Title"] = "Track Shipment";
+}
+
+<h2 class="mb-4">🔍 Track Your Shipment</h2>
+
+<div class="card shadow-sm mb-4" style="max-width:500px">
+    <div class="card-body p-4">
+        <form asp-action="Track" method="post">
+            <div class="input-group">
+                <input type="text" name="trackingId" class="form-control form-control-lg"
+                       placeholder="Enter Tracking ID (e.g. TRK20240101123456789)" required />
+                <button type="submit" class="btn btn-primary">Track</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (Model != null)
+{
+    var badgeClass = Model.Status switch
+    {
+        "In Transit" => "badge-transit",
+        "Delivered" => "badge-delivered",
+        "Returned" => "badge-returned",
+        _ => "badge-pending"
+    };
+
+    <div class="card shadow border-0" style="max-width:600px">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <strong>Tracking ID: @Model.TrackingId</strong>
+            <span class="badge @badgeClass px-3 py-2">@Model.Status</span>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-6"><small class="text-muted">Sender</small><p class="fw-bold mb-0">@Model.SenderName</p></div>
+                <div class="col-6"><small class="text-muted">Receiver</small><p class="fw-bold mb-0">@Model.ReceiverName</p></div>
+                <div class="col-6"><small class="text-muted">From</small><p class="mb-0">@Model.Origin</p></div>
+                <div class="col-6"><small class="text-muted">To</small><p class="mb-0">@Model.Destination</p></div>
+                <div class="col-6"><small class="text-muted">Weight</small><p class="mb-0">@Model.Weight kg</p></div>
+                <div class="col-6"><small class="text-muted">Last Updated</small><p class="mb-0">@Model.UpdatedAt.ToString("dd MMM yyyy, hh:mm tt")</p></div>
+            </div>
+        </div>
+    </div>
+}

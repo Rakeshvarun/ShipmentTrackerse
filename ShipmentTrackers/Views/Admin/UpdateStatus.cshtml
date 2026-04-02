@@ -1,0 +1,131 @@
+﻿@model ShipmentTrackers.Models.Shipment
+@{
+    ViewData["Title"] = "Update Status";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center mb-4">
+                <a href="/Admin/Dashboard" class="btn btn-outline-secondary btn-sm me-3">← Back</a>
+                <h4 class="mb-0">✏️ Update Shipment Status</h4>
+            </div>
+
+            <!-- Shipment Info Card -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <strong>📦 Shipment Details</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <small class="text-muted">Tracking ID</small>
+                            <p class="fw-bold mb-1"><code>@Model.TrackingId</code></p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Sender</small>
+                            <p class="mb-1">@Model.SenderName</p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Receiver</small>
+                            <p class="mb-1">@Model.ReceiverName</p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">From</small>
+                            <p class="mb-1">@Model.Origin</p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">To</small>
+                            <p class="mb-1">@Model.Destination</p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Weight</small>
+                            <p class="mb-1">@Model.Weight kg</p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Created</small>
+                            <p class="mb-1">@Model.CreatedAt.ToString("dd MMM yyyy")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Status Badge -->
+            <div class="mb-3">
+                <span class="text-muted">Current Status: </span>
+                @{
+                    var badgeClass = Model.Status switch
+                    {
+                        "In Transit" => "bg-primary",
+                        "Out for Delivery" => "bg-info text-dark",
+                        "Delivered" => "bg-success",
+                        "Returned" => "bg-danger",
+                        "Cancelled" => "bg-secondary",
+                        _ => "bg-warning text-dark"
+                    };
+                }
+                <span class="badge @badgeClass px-3 py-2 fs-6">@Model.Status</span>
+            </div>
+
+            <!-- Update Form -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select New Status</label>
+                            <select name="status" class="form-select form-select-lg">
+                                @foreach (var s in new[] {
+                                                                "Pending",
+                                                                "In Transit",
+                                                                "Out for Delivery",
+                                                                "Delivered",
+                                                                "Returned",
+                                                                "Cancelled"
+                                                                })
+                                {
+                                    if (s == Model.Status)
+                                    {
+                                        <option value="@s" selected>@s</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@s">@s</option>
+                                    }
+                                }
+                            </select>
+                            <div class="form-text">Current status upar dikh raha hai. Naya select karo.</div>
+                        </div>
+
+                        <!-- Status Visual Guide -->
+                        <div class="mb-4">
+                            <small class="text-muted d-block mb-2">Status Guide:</small>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                <span>→</span>
+                                <span class="badge bg-primary">In Transit</span>
+                                <span>→</span>
+                                <span class="badge bg-info text-dark">Out for Delivery</span>
+                                <span>→</span>
+                                <span class="badge bg-success">Delivered</span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                ✅ Update Status
+                            </button>
+                            <a href="/Admin/Dashboard" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

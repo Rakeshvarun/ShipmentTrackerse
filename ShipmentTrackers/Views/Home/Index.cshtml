@@ -1,0 +1,44 @@
+﻿<!-- FILE: Views/Home/Index.cshtml -->
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold">🚚 Shipment Tracking System</h1>
+    <p class="lead text-muted">Track your parcels in real-time with ease.</p>
+    <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+        <a href="/Shipment/Create" class="btn btn-primary btn-lg">+ Create Shipment</a>
+        <a href="/Shipment/Track" class="btn btn-outline-secondary btn-lg">🔍 Track Shipment</a>
+        <a href="/Shipment/History" class="btn btn-outline-dark btn-lg">📋 View History</a>
+    </div>
+</div>
+
+<div class="row mt-5 g-4">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+                <div style="font-size:2.5rem">📦</div>
+                <h5 class="mt-2">Create Shipment</h5>
+                <p class="text-muted small">Fill sender/receiver details and get a unique Tracking ID instantly.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+                <div style="font-size:2.5rem">🗺️</div>
+                <h5 class="mt-2">Real-time Tracking</h5>
+                <p class="text-muted small">Enter your Tracking ID to see current status — Pending, In Transit, or Delivered.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+                <div style="font-size:2.5rem">🛠️</div>
+                <h5 class="mt-2">Admin Dashboard</h5>
+                <p class="text-muted small">Admins can update shipment status, view history, and manage all packages.</p>
+            </div>
+        </div>
+    </div>
+</div>

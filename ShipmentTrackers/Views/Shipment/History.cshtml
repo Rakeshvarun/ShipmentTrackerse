@@ -1,0 +1,53 @@
+﻿<!-- FILE: Views/Shipment/History.cshtml -->
+@model List<ShipmentTrackers.Models.Shipment>
+@{
+    ViewData["Title"] = "Shipment History";
+}
+
+<h2 class="mb-4">📋 Shipment History</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No shipments found.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Sender</th>
+                    <th>Receiver</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    var badgeClass = s.Status switch
+                    {
+                        "In Transit" => "badge-transit",
+                        "Delivered" => "badge-delivered",
+                        "Returned" => "badge-returned",
+                        _ => "badge-pending"
+                    };
+                    <tr>
+                        <td><code>@s.TrackingId</code></td>
+                        <td>@s.SenderName</td>
+                        <td>@s.ReceiverName</td>
+                        <td>@s.Origin</td>
+                        <td>@s.Destination</td>
+                        <td>@s.Weight kg</td>
+                        <td><span class="badge @badgeClass">@s.Status</span></td>
+                        <td>@s.CreatedAt.ToString("dd MMM yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
