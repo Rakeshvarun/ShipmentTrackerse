@@ -12,8 +12,8 @@ using ShipmentTrackers.Data;
 namespace ShipmentTrackerse.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260402124206_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260402130517_Fresh")]
+    partial class Fresh
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
