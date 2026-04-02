@@ -17,20 +17,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ShipmentTrackerse.dll"]
-```
-
-6. **Ctrl + S** dabayein — Save ✅
-
----
-
-### ✅ Verify Karein
-
-Solution Explorer mein aisa dikhna chahiye:
-```
-📁 ShipmentTrackers (Solution)
-├── 📁 ShipmentTrackers (Project)
-│   ├── Controllers/
-│   ├── Models/
-│   ├── appsettings.json
-│   └── ...
-└── 📄 Dockerfile   ← Yahan hona chahiye
